@@ -1,0 +1,736 @@
+<Sysmon schemaversion="4.4">
+
+	<HashAlgorithms>*</HashAlgorithms>
+
+	<CheckRevocation/>
+
+	<DnsLookup>True</DnsLookup>
+
+	<ArchiveDirectory>Sysmon</ArchiveDirectory>
+
+	<EventFiltering>
+
+		<!--
+		Event ID 1: Process creation
+		The process creation event provides extended information about a newly created process. The full command line provides context on the process execution. The ProcessGUID field is a unique value for this process across a domain to make event correlation easier. The hash is a full hash of the file with the algorithms in the HashType field.
+		-->
+		<ProcessCreate onmatch="exclude">
+
+			<!-- Windows Search -->
+			<ParentImage condition="is">C:\Windows\system32\SearchIndexer.exe</ParentImage> 
+
+		</ProcessCreate>
+
+		<!--
+		Event ID 2: A process changed a file creation time
+		The change file creation time event is registered when a file creation time is explicitly modified by a process. This event helps tracking the real creation time of a file. Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system. Note that many processes legitimately change the creation time of a file; it does not necessarily indicate malicious activity.
+		-->
+		<FileCreateTime onmatch="exclude">
+
+			<!-- Microsoft Edge -->
+			<TargetFilename condition="contains all">C:\Users\;\AppData\Local\Microsoft\Edge\User Data\</TargetFilename>
+
+		</FileCreateTime>
+
+		<!--
+		Event ID 3: Network connection
+		The network connection event logs TCP/UDP connections on the machine. It is disabled by default. Each connection is linked to a process through the ProcessId and ProcessGUID fields. The event also contains the source and destination host names IP addresses, port numbers and IPv6 status.
+		-->
+		<RuleGroup name="NetworkConnect" groupRelation="or">
+
+			<NetworkConnect onmatch="exclude">
+
+				<Image name="smartscreen.exe" condition="is">C:\Windows\System32\smartscreen.exe</Image>
+
+				<!-- FQDNs used by Microsoft -->
+				<DestinationHostname condition="end with">.aadrm.com</DestinationHostname>
+				<DestinationHostname condition="end with">account.activedirectory.windowsazure.com</DestinationHostname>
+				<DestinationHostname condition="end with">account.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">account.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">accounts.accesscontrol.windows.net</DestinationHostname>
+				<DestinationHostname condition="end with">.acompli.net</DestinationHostname>
+				<DestinationHostname condition="end with">activation.sls.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">ad.atdmt.com</DestinationHostname>
+				<DestinationHostname condition="end with">.adl.windows.com</DestinationHostname>
+				<DestinationHostname condition="end with">admin.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">admin.onedrive.com</DestinationHostname>
+				<DestinationHostname condition="end with">adminwebservice.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">ajax.aspnetcdn.com</DestinationHostname>
+				<DestinationHostname condition="end with">ajax.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">aka.ms</DestinationHostname>
+				<DestinationHostname condition="end with">amp.azure.net</DestinationHostname>
+				<DestinationHostname condition="end with">amsglob0cdnstream11.azureedge.net</DestinationHostname>
+				<DestinationHostname condition="end with">amsglob0cdnstream12.azureedge.net</DestinationHostname>
+				<DestinationHostname condition="end with">analytics.localytics.com</DestinationHostname>
+				<DestinationHostname condition="end with">apc.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">api.diagnostics.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">api.localytics.com</DestinationHostname>
+				<DestinationHostname condition="end with">api.meetup.com</DestinationHostname>
+				<DestinationHostname condition="end with">.api.microsoftstream.com</DestinationHostname>
+				<DestinationHostname condition="end with">api.microsoftstream.com</DestinationHostname>
+				<DestinationHostname condition="end with">api.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">api.passwordreset.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">apis.live.net</DestinationHostname>
+				<DestinationHostname condition="end with">.appex.bing.com</DestinationHostname>
+				<DestinationHostname condition="end with">.appex-rf.msn.com</DestinationHostname>
+				<DestinationHostname condition="end with">appsforoffice.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.aria.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">assets.onestore.ms</DestinationHostname>
+				<DestinationHostname condition="end with">.assets-yammer.com</DestinationHostname>
+				<DestinationHostname condition="end with">attachments.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">aus.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">auth.gfx.ms</DestinationHostname>
+				<DestinationHostname condition="end with">autologon.microsoftazuread-sso.com</DestinationHostname>
+				<DestinationHostname condition="end with">az416426.vo.msecnd.net</DestinationHostname>
+				<DestinationHostname condition="end with">az826701.vo.msecnd.net</DestinationHostname>
+				<DestinationHostname condition="end with">.azureedge.net</DestinationHostname>
+				<DestinationHostname condition="end with">.azurerms.com</DestinationHostname>
+				<DestinationHostname condition="end with">becws.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">bit.ly</DestinationHostname>
+				<DestinationHostname condition="end with">.blob.core.windows.net</DestinationHostname>
+				<DestinationHostname condition="end with">*broadcast.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">.broadcast.skype.com</DestinationHostname>
+				<DestinationHostname condition="end with">broadcast.skype.com</DestinationHostname>
+				<DestinationHostname condition="end with">c1.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">can.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">c.bing.com</DestinationHostname>
+				<DestinationHostname condition="end with">c.bing.net</DestinationHostname>
+				<DestinationHostname condition="end with">ccs.login.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">cdn.forms.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">cdn.odc.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">*cdn.onenote.net</DestinationHostname>
+				<DestinationHostname condition="end with">cdn.optimizely.com</DestinationHostname>
+				<DestinationHostname condition="end with">cdnprod.myanalytics.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">cdn.sharepointonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">cl2.apple.com</DestinationHostname>
+				<DestinationHostname condition="end with">click.email.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">clientconfig.microsoftonline-p.net</DestinationHostname>
+				<DestinationHostname condition="end with">client.hip.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">c.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">.cloudapp.net</DestinationHostname>
+				<DestinationHostname condition="end with">companymanager.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">compass-ssl.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">config.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.config.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">connect.facebook.net</DestinationHostname>
+				<DestinationHostname condition="end with">contentstorage.osi.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">crl.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">dc.applicationinsights.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">dc.services.visualstudio.com</DestinationHostname>
+				<DestinationHostname condition="end with">d.docs.live.net</DestinationHostname>
+				<DestinationHostname condition="end with">delve-gcc.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">device.login.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">dgps.support.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">directory.services.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">docs.live.net</DestinationHostname>
+				<DestinationHostname condition="end with">docs.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">ecn.dev.virtualearth.net</DestinationHostname>
+				<DestinationHostname condition="end with">enterpriseregistration.windows.net</DestinationHostname>
+				<DestinationHostname condition="end with">en-us.appex-rf.msn.com</DestinationHostname>
+				<DestinationHostname condition="end with">eur.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">eus-www.sway-cdn.com</DestinationHostname>
+				<DestinationHostname condition="end with">eus-www.sway-extensions.com</DestinationHostname>
+				<DestinationHostname condition="end with">.events.data.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">excelbingmap.firstpartyapps.oaspapps.com</DestinationHostname>
+				<DestinationHostname condition="end with">excelcs.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">*excel.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">-files.sharepoint.com</DestinationHostname>
+				<DestinationHostname condition="end with">firstpartyapps.oaspapps.com</DestinationHostname>
+				<DestinationHostname condition="end with">foodanddrink.services.appex.bing.com</DestinationHostname>
+				<DestinationHostname condition="end with">forms.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">forms.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">gbr.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">g.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">go.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">graph.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">graph.windows.net</DestinationHostname>
+				<DestinationHostname condition="end with">.helpshift.com</DestinationHostname>
+				<DestinationHostname condition="end with">.hockeyapp.net</DestinationHostname>
+				<DestinationHostname condition="end with">home.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">ind.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.informationprotection.azure.com</DestinationHostname>
+				<DestinationHostname condition="end with">informationprotection.hosting.portal.azure.net</DestinationHostname>
+				<DestinationHostname condition="end with">insertmedia.bing.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">.itunes.apple.com</DestinationHostname>
+				<DestinationHostname condition="end with">jpn.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.keydelivery.mediaservices.windows.net</DestinationHostname>
+				<DestinationHostname condition="end with">kor.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">lam.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.localytics.com</DestinationHostname>
+				<DestinationHostname condition="end with">logincert.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">loginex.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">login.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">login.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">login.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">login.microsoftonline-p.com</DestinationHostname>
+				<DestinationHostname condition="end with">login-us.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">login.windows.net</DestinationHostname>
+				<DestinationHostname condition="end with">login.windows-ppe.net</DestinationHostname>
+				<DestinationHostname condition="end with">.log.optimizely.com</DestinationHostname>
+				<DestinationHostname condition="end with">loki.delve-gcc.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.loki.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">loki.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">lpcres.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.lync.com</DestinationHostname>
+				<DestinationHostname condition="end with">.mail.protection.outlook.com</DestinationHostname>
+				<DestinationHostname condition="end with">management.azure.com</DestinationHostname>
+				<DestinationHostname condition="end with">.manage.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.manage.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">manage.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.measure.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.media.azure.net</DestinationHostname>
+				<DestinationHostname condition="end with">mem.gfx.ms</DestinationHostname>
+				<DestinationHostname condition="end with">.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">.microsoftonline-p.com</DestinationHostname>
+				<DestinationHostname condition="end with">mlccdn.blob.core.windows.net</DestinationHostname>
+				<DestinationHostname condition="end with">mlccdnprod.azureedge.net</DestinationHostname>
+				<DestinationHostname condition="end with">mrodevicemgr.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">.msappproxy.net</DestinationHostname>
+				<DestinationHostname condition="end with">.msauthimages.net</DestinationHostname>
+				<DestinationHostname condition="end with">.msauth.net</DestinationHostname>
+				<DestinationHostname condition="end with">msdn.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.msecnd.net</DestinationHostname>
+				<DestinationHostname condition="end with">.msedge.net</DestinationHostname>
+				<DestinationHostname condition="end with">.msftauthimages.net</DestinationHostname>
+				<DestinationHostname condition="end with">.msftauth.net</DestinationHostname>
+				<DestinationHostname condition="end with">.msftidentity.com</DestinationHostname>
+				<DestinationHostname condition="end with">.msidentity.com</DestinationHostname>
+				<DestinationHostname condition="end with">.msocdn.com</DestinationHostname>
+				<DestinationHostname condition="end with">.mstea.ms</DestinationHostname>
+				<DestinationHostname condition="end with">myanalytics-gcc.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">myanalytics.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">*-myfiles.sharepoint.com</DestinationHostname>
+				<DestinationHostname condition="end with">nam.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">nexus.microsoftonline-p.com</DestinationHostname>
+				<DestinationHostname condition="end with">nexus.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">nexusrules.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">.notification.api.microsoftstream.com</DestinationHostname>
+				<DestinationHostname condition="end with">nps.onyx.azure.net</DestinationHostname>
+				<DestinationHostname condition="end with">o15.officeredir.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.o365weve.com</DestinationHostname>
+				<DestinationHostname condition="end with">ocos-office365-s2s.msedge.net</DestinationHostname>
+				<DestinationHostname condition="end with">ocsa.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">ocsredir.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">ocws.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">odc.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">odcsm.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">office15client.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.office365.com</DestinationHostname>
+				<DestinationHostname condition="end with">office365servicehealthcommunications.cloudapp.net</DestinationHostname>
+				<DestinationHostname condition="end with">officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">officecdn.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">officecdn.microsoft.com.edgesuite.net</DestinationHostname>
+				<DestinationHostname condition="end with">officeclient.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.officeconfig.msocdn.com</DestinationHostname>
+				<DestinationHostname condition="end with">officeimg.vo.msecnd.net</DestinationHostname>
+				<DestinationHostname condition="end with">office.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">office.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">officepreviewredir.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">officeredir.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">officespeech.platform.bing.com</DestinationHostname>
+				<DestinationHostname condition="end with">ols.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">omextemplates.content.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">oneclient.sfx.ms</DestinationHostname>
+				<DestinationHostname condition="end with">.onenote.com</DestinationHostname>
+				<DestinationHostname condition="end with">*onenote.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">.online.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.onmicrosoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.outlook.com</DestinationHostname>
+				<DestinationHostname condition="end with">.outlookmobile.com</DestinationHostname>
+				<DestinationHostname condition="end with">outlook.office365.com</DestinationHostname>
+				<DestinationHostname condition="end with">.outlook.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">outlook.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">outlook.uservoice.com</DestinationHostname>
+				<DestinationHostname condition="end with">partnerservices.getmicrosoftkey.com</DestinationHostname>
+				<DestinationHostname condition="end with">passwordreset.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">peoplegraph.firstpartyapps.oaspapps.com</DestinationHostname>
+				<DestinationHostname condition="end with">.phonefactor.net</DestinationHostname>
+				<DestinationHostname condition="end with">platform.linkedin.com</DestinationHostname>
+				<DestinationHostname condition="end with">policykeyservice.dc.ad.msft.net</DestinationHostname>
+				<DestinationHostname condition="end with">.portal.cloudappsecurity.com</DestinationHostname>
+				<DestinationHostname condition="end with">portal.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">portal.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">*powerpoint.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">pptcs.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">privatecdn.sharepointonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">prod.firstpartyapps.oaspapps.com.akadns.net</DestinationHostname>
+				<DestinationHostname condition="end with">prod.msocdn.com</DestinationHostname>
+				<DestinationHostname condition="end with">products.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.protection.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">protection.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.protection.outlook.com</DestinationHostname>
+				<DestinationHostname condition="end with">provisioningapi.microsoftonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">publiccdn.sharepointonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">quicktips.skypeforbusiness.com</DestinationHostname>
+				<DestinationHostname condition="end with">r1.res.office365.com</DestinationHostname>
+				<DestinationHostname condition="end with">r3.res.office365.com</DestinationHostname>
+				<DestinationHostname condition="end with">r3.res.outlook.com</DestinationHostname>
+				<DestinationHostname condition="end with">r4.res.office365.com</DestinationHostname>
+				<DestinationHostname condition="end with">res.delve.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">rink.hockeyapp.net</DestinationHostname>
+				<DestinationHostname condition="end with">roaming.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">r.office.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">*rtc.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">s0.assets-yammer.com</DestinationHostname>
+				<DestinationHostname condition="end with">sas.office.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">sdk.hockeyapp.net</DestinationHostname>
+				<DestinationHostname condition="end with">.search.production.apac.trafficmanager.net</DestinationHostname>
+				<DestinationHostname condition="end with">.search.production.emea.trafficmanager.net</DestinationHostname>
+				<DestinationHostname condition="end with">.search.production.us.trafficmanager.net</DestinationHostname>
+				<DestinationHostname condition="end with">secure.aadcdn.microsoftonline-p.com</DestinationHostname>
+				<DestinationHostname condition="end with">secure.meetup.com</DestinationHostname>
+				<DestinationHostname condition="end with">securescore.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.secure.skypeassets.com</DestinationHostname>
+				<DestinationHostname condition="end with">.sfbassets.com</DestinationHostname>
+				<DestinationHostname condition="end with">*shared.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">.sharepoint.com</DestinationHostname>
+				<DestinationHostname condition="end with">.sharepointonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">shellprod.msocdn.com</DestinationHostname>
+				<DestinationHostname condition="end with">signup.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">signup.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.skype.com</DestinationHostname>
+				<DestinationHostname condition="end with">.skypeforbusiness.com</DestinationHostname>
+				<DestinationHostname condition="end with">skypemaprdsitus.trafficmanager.net</DestinationHostname>
+				<DestinationHostname condition="end with">smtp.office365.com</DestinationHostname>
+				<DestinationHostname condition="end with">spoprod-a.akamaihd.net</DestinationHostname>
+				<DestinationHostname condition="end with">ssw.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">staffhub.ms</DestinationHostname>
+				<DestinationHostname condition="end with">.staffhub.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">staffhub.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">staffhub.uservoice.com</DestinationHostname>
+				<DestinationHostname condition="end with">staffhubweb.azureedge.net</DestinationHostname>
+				<DestinationHostname condition="end with">static.sharepointonline.com</DestinationHostname>
+				<DestinationHostname condition="end with">statics.teams.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">storage.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">store.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.streaming.mediaservices.windows.net</DestinationHostname>
+				<DestinationHostname condition="end with">suite.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">support.content.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">support.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">support.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.svc.ms</DestinationHostname>
+				<DestinationHostname condition="end with">sway.com</DestinationHostname>
+				<DestinationHostname condition="end with">sway.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">s.ytimg.com</DestinationHostname>
+				<DestinationHostname condition="end with">tasks.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.teams.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">teams.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">technet.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">telemetryservice.firstpartyapps.oaspapps.com</DestinationHostname>
+				<DestinationHostname condition="end with">templateservice.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">templates.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">.tenor.com</DestinationHostname>
+				<DestinationHostname condition="end with">testconnectivity.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">tse1.mm.bing.net</DestinationHostname>
+				<DestinationHostname condition="end with">uci.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">.urlp.sfbassets.com</DestinationHostname>
+				<DestinationHostname condition="end with">.users.storage.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">videocontent.osi.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">videoplayercdn.osi.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">view.atdmt.com</DestinationHostname>
+				<DestinationHostname condition="end with">*view.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">*visio.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">vortex.data.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">watson.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">watson.telemetry.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">weather.tile.appex.bing.com</DestinationHostname>
+				<DestinationHostname condition="end with">webanalytics.localytics.com</DestinationHostname>
+				<DestinationHostname condition="end with">web.localytics.com</DestinationHostname>
+				<DestinationHostname condition="end with">web.microsoftstream.com</DestinationHostname>
+				<DestinationHostname condition="end with">webshell.suite.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">wikipedia.firstpartyapps.oaspapps.com</DestinationHostname>
+				<DestinationHostname condition="end with">.wns.windows.com</DestinationHostname>
+				<DestinationHostname condition="end with">wordcs.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">word-edit.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">word-view.officeapps.live.com</DestinationHostname>
+				<DestinationHostname condition="end with">workplaceanalytics.cdn.office.net</DestinationHostname>
+				<DestinationHostname condition="end with">workplaceanalytics.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">wus-firstpartyapps.oaspapps.com</DestinationHostname>
+				<DestinationHostname condition="end with">wus-www.sway-cdn.com</DestinationHostname>
+				<DestinationHostname condition="end with">wus-www.sway-extensions.com</DestinationHostname>
+				<DestinationHostname condition="end with">www.bing.com</DestinationHostname>
+				<DestinationHostname condition="end with">www.office.com</DestinationHostname>
+				<DestinationHostname condition="end with">www.onedrive.com</DestinationHostname>
+				<DestinationHostname condition="end with">www.outlook.com</DestinationHostname>
+				<DestinationHostname condition="end with">www.sway.com</DestinationHostname>
+				<DestinationHostname condition="end with">www.youtube.com</DestinationHostname>
+				<DestinationHostname condition="end with">.yammer.com</DestinationHostname>
+				<DestinationHostname condition="end with">.yammerusercontent.com</DestinationHostname>
+
+				<!-- Certificate authorities -->
+				<DestinationHostname condition="end with">aia.entrust.net</DestinationHostname>
+				<DestinationHostname condition="end with">apps.identrust.com</DestinationHostname>
+				<DestinationHostname condition="end with">cacert.a.omniroot.com</DestinationHostname>
+				<DestinationHostname condition="end with">cacert.omniroot.com</DestinationHostname>
+				<DestinationHostname condition="end with">cacerts.digicert.com</DestinationHostname>
+				<DestinationHostname condition="end with">cdp1.public-trust.com</DestinationHostname>
+				<DestinationHostname condition="end with">cert.int-x3.letsencrypt.org</DestinationHostname>
+				<DestinationHostname condition="end with">crl3.digicert.com</DestinationHostname>
+				<DestinationHostname condition="end with">crl4.digicert.com</DestinationHostname>
+				<DestinationHostname condition="end with">crl.entrust.net</DestinationHostname>
+				<DestinationHostname condition="end with">crl.globalsign.com</DestinationHostname>
+				<DestinationHostname condition="end with">crl.globalsign.net</DestinationHostname>
+				<DestinationHostname condition="end with">crl.identrust.com</DestinationHostname>
+				<DestinationHostname condition="end with">crl.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">.entrust.net</DestinationHostname>
+				<DestinationHostname condition="end with">evintl-aia.verisign.com</DestinationHostname>
+				<DestinationHostname condition="end with">evintl-crl.verisign.com</DestinationHostname>
+				<DestinationHostname condition="end with">evintl-ocsp.verisign.com</DestinationHostname>
+				<DestinationHostname condition="end with">evsecure-aia.verisign.com</DestinationHostname>
+				<DestinationHostname condition="end with">evsecure-crl.verisign.com</DestinationHostname>
+				<DestinationHostname condition="end with">evsecure-ocsp.verisign.com</DestinationHostname>
+				<DestinationHostname condition="end with">.geotrust.com</DestinationHostname>
+				<DestinationHostname condition="end with">isrg.trustid.ocsp.identrust.com</DestinationHostname>
+				<DestinationHostname condition="end with">mscrl.microsoft.com</DestinationHostname>
+				<DestinationHostname condition="end with">ocsp2.globalsign.com</DestinationHostname>
+				<DestinationHostname condition="end with">ocsp.digicert.com</DestinationHostname>
+				<DestinationHostname condition="end with">ocsp.entrust.net</DestinationHostname>
+				<DestinationHostname condition="end with">ocsp.globalsign.com</DestinationHostname>
+				<DestinationHostname condition="end with">ocsp.int-x3.letsencrypt.org</DestinationHostname>
+				<DestinationHostname condition="end with">ocsp.msocsp.com</DestinationHostname>
+				<DestinationHostname condition="end with">ocsp.omniroot.com</DestinationHostname>
+				<DestinationHostname condition="end with">ocspx.digicert.com</DestinationHostname>
+				<DestinationHostname condition="end with">.omniroot.com</DestinationHostname>
+				<DestinationHostname condition="end with">.public-trust.com</DestinationHostname>
+				<DestinationHostname condition="end with">s1.symcb.com</DestinationHostname>
+				<DestinationHostname condition="end with">s2.symcb.com</DestinationHostname>
+				<DestinationHostname condition="end with">sa.symcb.com</DestinationHostname>
+				<DestinationHostname condition="end with">sd.symcb.com</DestinationHostname>
+				<DestinationHostname condition="end with">secure.globalsign.com</DestinationHostname>
+				<DestinationHostname condition="end with">sr.symcb.com</DestinationHostname>
+				<DestinationHostname condition="end with">sr.symcd.com</DestinationHostname>
+				<DestinationHostname condition="end with">su.symcb.com</DestinationHostname>
+				<DestinationHostname condition="end with">su.symcd.com</DestinationHostname>
+				<DestinationHostname condition="end with">.symcb.com</DestinationHostname>
+				<DestinationHostname condition="end with">.symcd.com</DestinationHostname>
+				<DestinationHostname condition="end with">vassg142.crl.omniroot.com</DestinationHostname>
+				<DestinationHostname condition="end with">vassg142.ocsp.omniroot.com</DestinationHostname>
+				<DestinationHostname condition="end with">.verisign.com</DestinationHostname>
+				<DestinationHostname condition="end with">.verisign.net</DestinationHostname>
+				<DestinationHostname condition="end with">www.digicert.com</DestinationHostname>
+				<DestinationHostname condition="end with">www.microsoft.com</DestinationHostname>
+
+			</NetworkConnect>
+
+		</RuleGroup>
+
+		<!--
+		Event ID 4: Sysmon service state changed
+		The service state change event reports the state of the Sysmon service (started or stopped).	
+		Attn: Cannot be filtered!
+		-->
+
+		<!--
+		Event ID 5: Process terminated
+		The process terminate event reports when a process terminates. It provides the UtcTime, ProcessGuid and ProcessId of the process.
+		-->
+		<ProcessTerminate onmatch="exclude" />
+
+		<!--
+		Event ID 6: Driver loaded
+		The driver loaded events provides information about a driver being loaded on the system. The configured hashes are provided as well as signature information. The signature is created asynchronously for performance reasons and indicates if the file was removed after loading.
+		-->
+		<DriverLoad onmatch="exclude" />
+
+		<!--
+		Event ID 7: Image loaded
+		The image loaded event logs when a module is loaded in a specific process. This event is disabled by default and needs to be configured with the –l option. It indicates the process in which the module is loaded, hashes and signature information. The signature is created asynchronously for performance reasons and indicates if the file was removed after loading. This event should be configured carefully, as monitoring all image load events will generate a large number of events.
+		-->
+		<ImageLoad onmatch="include" />
+
+		<!--
+		Event ID 8: CreateRemoteThread
+		The CreateRemoteThread event detects when a process creates a thread in another process. This technique is used by malware to inject code and hide in other processes. The event indicates the source and target process. It gives information on the code that will be run in the new thread: StartAddress, StartModule and StartFunction. Note that StartModule and StartFunction fields are inferred, they might be empty if the starting address is outside loaded modules or known exported functions.
+		-->
+		<CreateRemoteThread onmatch="exclude" />
+
+		<!--
+		Event ID 9: RawAccessRead
+		The RawAccessRead event detects when a process conducts reading operations from the drive using the \\.\ denotation. This technique is often used by malware for data exfiltration of files that are locked for reading, as well as to avoid file access auditing tools. The event indicates the source process and target device.
+		-->
+		<RawAccessRead onmatch="include" />
+
+		<!--
+		Event ID 10: ProcessAccess
+		The process accessed event reports when a process opens another process, an operation that’s often followed by information queries or reading and writing the address space of the target process. This enables detection of hacking tools that read the memory contents of processes like Local Security Authority (Lsass.exe) in order to steal credentials for use in Pass-the-Hash attacks. Enabling it can generate significant amounts of logging if there are diagnostic utilities active that repeatedly open processes to query their state, so it generally should only be done so with filters that remove expected accesses.
+		-->
+
+		<RuleGroup name="ProcessAccess" groupRelation="or">
+
+			<ProcessAccess onmatch="exclude">
+
+				<SourceImage condition="is">C:\WINDOWS\Explorer.EXE</SourceImage>
+
+				<SourceImage condition="begin with">C:\WINDOWS\system32\</SourceImage>
+
+				<!-- Microsoft Defender -->
+				<SourceImage condition="contains all">C:\ProgramData\Microsoft\Windows Defender\platform\;MsMpEng.exe</SourceImage>
+
+				<SourceImage condition="is">C:\Program Files\Microsoft VS Code\Code.exe</SourceImage>
+
+			</ProcessAccess>
+
+		</RuleGroup>
+
+		<!--
+		Event ID 11: FileCreate
+		File create operations are logged when a file is created or overwritten. This event is useful for monitoring autostart locations, like the Startup folder, as well as temporary and download directories, which are common places malware drops during initial infection.
+		-->
+		<RuleGroup name="FileCreate" groupRelation="or">
+
+			<FileCreate onmatch="include">
+
+				<!--Windows: Startup links and shortcut modification [ https://attack.mitre.org/wiki/Technique/T1023 ] -->
+				<TargetFilename name="T1023" condition="contains">\Start Menu</TargetFilename> 
+
+				<!--Microsoft:Changes to user's auto-launched files and shortcuts-->
+				<TargetFilename name="T1165" condition="contains">\Startup\</TargetFilename> 
+
+				<!--Microsoft:Outlook: attachments-->
+				<TargetFilename name="OutlookAttachment" condition="contains">\Content.Outlook\</TargetFilename> 
+				
+				<!--Microsoft:ClickOnce: [ https://blog.netspi.com/all-you-need-is-one-a-clickonce-love-story/ ] -->
+				<TargetFilename condition="end with">.application</TargetFilename>
+				<!--Microsoft:ClickOnce application | Credit @ion-storm -->
+				<TargetFilename condition="end with">.appref-ms</TargetFilename> 
+				<TargetFilename condition="end with">.bat</TargetFilename> 
+				<TargetFilename condition="end with">.exe</TargetFilename>
+				<TargetFilename condition="end with">.cmd</TargetFilename>
+				<TargetFilename condition="end with">.ps1</TargetFilename>
+				<TargetFilename condition="end with">.bat</TargetFilename>
+				<TargetFilename condition="end with">.wsh</TargetFilename>
+				<TargetFilename condition="end with">.job</TargetFilename>
+				<TargetFilename condition="end with">.hta</TargetFilename>
+				<TargetFilename condition="end with">.jnlp</TargetFilename>
+				<TargetFilename condition="end with">.jar</TargetFilename>
+				<TargetFilename condition="end with">.js</TargetFilename>
+				<TargetFilename condition="end with">.jse</TargetFilename>
+				<TargetFilename condition="end with">.scr</TargetFilename>
+				<TargetFilename condition="end with">.vbe</TargetFilename>
+				<TargetFilename condition="end with">.vbs</TargetFilename>
+
+				<TargetFilename condition="begin with">C:\Windows\system32\Drivers</TargetFilename>
+				<TargetFilename condition="begin with">C:\Windows\SysWOW64\Drivers</TargetFilename>
+
+				<!--Microsoft:WMI: [ More information: http://2014.hackitoergosum.org/slides/day1_WMI_Shell_Andrei_Dumitrescu.pdf ] -->
+				<TargetFilename condition="begin with">C:\Windows\system32\Wbem</TargetFilename> 
+				<TargetFilename condition="begin with">C:\Windows\SysWOW64\Wbem</TargetFilename> 
+
+				<!--Microsoft:Powershell: Look for modifications for persistence [ https://www.malwarearchaeology.com/cheat-sheets ] -->
+				<TargetFilename condition="begin with">C:\Windows\system32\WindowsPowerShell</TargetFilename> 
+				<TargetFilename condition="begin with">C:\Windows\SysWOW64\WindowsPowerShell</TargetFilename> 
+				
+				<!--Microsoft:ScheduledTasks [ https://attack.mitre.org/wiki/Technique/T1053 ] -->
+				<TargetFilename name="T1053" condition="begin with">C:\Windows\Tasks\</TargetFilename> 
+				<TargetFilename name="T1053" condition="begin with">C:\Windows\system32\Tasks</TargetFilename> 
+				<TargetFilename name="T1053" condition="begin with">C:\Windows\SysWOW64\Tasks</TargetFilename> 
+				
+				<!--Nothing should be executing from VSC | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] -->
+				<Image condition="begin with">\Device\HarddiskVolumeShadowCopy</Image> 
+
+				<!--Microsoft:Office Macro -->	
+				<TargetFilename condition="end with">.docm</TargetFilename> 
+				<TargetFilename condition="end with">.pptm</TargetFilename> 
+				<TargetFilename condition="end with">.xlsm</TargetFilename> 
+				
+				<!--Legacy Office files -->
+				<TargetFilename condition="end with">.doc</TargetFilename>
+				<TargetFilename condition="end with">.ppt</TargetFilename>
+				<TargetFilename condition="end with">.xls</TargetFilename>
+
+			</FileCreate>
+
+			<FileCreate onmatch="exclude">
+
+				<!-- temporary files-->
+				<TargetFilename condition="end with">.tmp</TargetFilename> 
+				<TargetFilename condition="end with">.~tmp</TargetFilename>
+
+				<!-- Prefetch files -->
+				<TargetFilename condition="end with">.pf</TargetFilename>
+
+				<!-- Microsoft Search -->
+				<Image condition="contains all">C:\Windows\SystemApps\Microsoft.Windows.Search_;\SearchApp.exe</Image>
+
+				<!-- Windows: WMI Performance updates-->
+				<Image condition="is">\\?\C:\Windows\system32\wbem\WMIADAP.EXE</Image> 
+
+				<!--Windows: Network file syncing-->
+				<Image condition="is">C:\Windows\system32\mobsync.exe</Image> 
+
+				<!-- Windows: Temp files by DrvInst.exe-->
+				<TargetFilename condition="begin with">C:\Windows\system32\DriverStore\Temp\</TargetFilename> 
+
+				<!-- Windows: Created in wbem by WMIADAP.exe-->
+				<TargetFilename condition="begin with">C:\Windows\system32\wbem\Performance\</TargetFilename> 
+
+				<!--Windows:Installer: Ignore MSI installer files caching-->
+				<TargetFilename condition="begin with">C:\Windows\Installer\</TargetFilename> 
+
+				<!-- Windows: Feature updates may contain a large number of .exe and .sys -->
+				<TargetFilename condition="begin with">C:\$WINDOWS.~BT\Sources\</TargetFilename> 
+
+				<!-- Windows: Windows update -->
+				<Image condition="begin with">C:\Windows\winsxs\amd64_microsoft-windows</Image> 
+
+			</FileCreate>
+
+		</RuleGroup>
+
+		<!--
+		Event ID 12: RegistryEvent (Object create and delete)
+		Registry key and value create and delete operations map to this event type, which can be useful for monitoring for changes to Registry autostart locations, or specific malware registry modifications.
+
+		Event ID 13: RegistryEvent (Value Set)
+		This Registry event type identifies Registry value modifications. The event records the value written for Registry values of type DWORD and QWORD.
+
+		Event ID 14: RegistryEvent (Key and Value Rename)
+		Registry key and value rename operations map to this event type, recording the new name of the key or value that was renamed.
+		-->
+		<RegistryEvent onmatch="include" />
+
+		<!--
+		Event ID 15: FileCreateStreamHash
+		This event logs when a named file stream is created, and it generates events that log the hash of the contents of the file to which the stream is assigned (the unnamed stream), as well as the contents of the named stream. There are malware variants that drop their executables or configuration settings via browser downloads, and this event is aimed at capturing that based on the browser attaching a Zone.Identifier “mark of the web” stream.
+		-->
+		<FileCreateStreamHash onmatch="exclude" />
+
+		<!--
+		Event ID 17: PipeEvent (Pipe Created)
+		This event generates when a named pipe is created. Malware often uses named pipes for interprocess communication.
+
+		Event ID 18: PipeEvent (Pipe Connected)
+		This event logs when a named pipe connection is made between a client and a server.
+		-->
+		<PipeEvent onmatch="exclude" />
+
+		<!--
+		Event ID 19: WmiEvent (WmiEventFilter activity detected)
+		When a WMI event filter is registered, which is a method used by malware to execute, this event logs the WMI namespace, filter name and filter expression.
+
+		Event ID 20: WmiEvent (WmiEventConsumer activity detected)
+		This event logs the registration of WMI consumers, recording the consumer name, log, and destination.
+
+		Event ID 21: WmiEvent (WmiEventConsumerToFilter activity detected)
+		When a consumer binds to a filter, this event logs the consumer name and filter path.
+		-->
+		<WmiEvent onmatch="exclude" />
+
+		<!--
+		Event ID 22: DNSEvent (DNS query)
+		This event generates when a process executes a DNS query, whether the result is successful or fails, cached or not. The telemetry for this event was added for Windows 8.1 so it is not available on Windows 7 and earlier.
+		-->
+		<DnsQuery onmatch="exclude" />
+
+		<!--
+		Event ID 23: FileDelete (A file delete was detected)
+		A file was deleted
+		-->
+		<RuleGroup name="FileDelete" groupRelation="or">
+
+			<FileDelete onmatch="include">
+
+				<!--Windows: Startup links and shortcut modification [ https://attack.mitre.org/wiki/Technique/T1023 ] -->
+				<TargetFilename name="T1023" condition="contains">\Start Menu</TargetFilename> 
+
+				<!--Microsoft:Changes to user's auto-launched files and shortcuts-->
+				<TargetFilename name="T1165" condition="contains">\Startup\</TargetFilename> 
+
+				<!--Microsoft:Outlook: attachments-->
+				<TargetFilename name="OutlookAttachment" condition="contains">\Content.Outlook\</TargetFilename> 
+				
+				<!--Microsoft:ClickOnce: [ https://blog.netspi.com/all-you-need-is-one-a-clickonce-love-story/ ] -->
+				<TargetFilename condition="end with">.application</TargetFilename>
+				<!--Microsoft:ClickOnce application | Credit @ion-storm -->
+				<TargetFilename condition="end with">.appref-ms</TargetFilename> 
+				<TargetFilename condition="end with">.bat</TargetFilename> 
+				<TargetFilename condition="end with">.exe</TargetFilename>
+				<TargetFilename condition="end with">.cmd</TargetFilename>
+				<TargetFilename condition="end with">.ps1</TargetFilename>
+				<TargetFilename condition="end with">.bat</TargetFilename>
+				<TargetFilename condition="end with">.wsh</TargetFilename>
+				<TargetFilename condition="end with">.job</TargetFilename>
+				<TargetFilename condition="end with">.hta</TargetFilename>
+				<TargetFilename condition="end with">.jnlp</TargetFilename>
+				<TargetFilename condition="end with">.jar</TargetFilename>
+				<TargetFilename condition="end with">.js</TargetFilename>
+				<TargetFilename condition="end with">.jse</TargetFilename>
+				<TargetFilename condition="end with">.scr</TargetFilename>
+				<TargetFilename condition="end with">.vbe</TargetFilename>
+				<TargetFilename condition="end with">.vbs</TargetFilename>
+
+				<TargetFilename condition="begin with">C:\Windows\system32\Drivers</TargetFilename>
+				<TargetFilename condition="begin with">C:\Windows\SysWOW64\Drivers</TargetFilename>
+
+				<!--Microsoft:WMI: [ More information: http://2014.hackitoergosum.org/slides/day1_WMI_Shell_Andrei_Dumitrescu.pdf ] -->
+				<TargetFilename condition="begin with">C:\Windows\system32\Wbem</TargetFilename> 
+				<TargetFilename condition="begin with">C:\Windows\SysWOW64\Wbem</TargetFilename> 
+
+				<!--Microsoft:Powershell: Look for modifications for persistence [ https://www.malwarearchaeology.com/cheat-sheets ] -->
+				<TargetFilename condition="begin with">C:\Windows\system32\WindowsPowerShell</TargetFilename> 
+				<TargetFilename condition="begin with">C:\Windows\SysWOW64\WindowsPowerShell</TargetFilename> 
+				
+				<!--Microsoft:ScheduledTasks [ https://attack.mitre.org/wiki/Technique/T1053 ] -->
+				<TargetFilename name="T1053" condition="begin with">C:\Windows\Tasks\</TargetFilename> 
+				<TargetFilename name="T1053" condition="begin with">C:\Windows\system32\Tasks</TargetFilename> 
+				<TargetFilename name="T1053" condition="begin with">C:\Windows\SysWOW64\Tasks</TargetFilename> 
+				
+				<!--Nothing should be executing from VSC | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] -->
+				<Image condition="begin with">\Device\HarddiskVolumeShadowCopy</Image> 
+
+				<!--Microsoft:Office Macro -->	
+				<TargetFilename condition="end with">.docm</TargetFilename> 
+				<TargetFilename condition="end with">.pptm</TargetFilename> 
+				<TargetFilename condition="end with">.xlsm</TargetFilename> 
+				
+				<!--Legacy Office files -->
+				<TargetFilename condition="end with">.doc</TargetFilename>
+				<TargetFilename condition="end with">.ppt</TargetFilename>
+				<TargetFilename condition="end with">.xls</TargetFilename>
+
+			</FileDelete>
+
+			<FileDelete onmatch="exclude">
+
+				<!-- temporary files-->
+				<TargetFilename condition="end with">.tmp</TargetFilename> 
+				<TargetFilename condition="end with">.~tmp</TargetFilename>
+
+				<!-- Prefetch files -->
+				<TargetFilename condition="end with">.pf</TargetFilename>
+
+				<!-- Microsoft Search -->
+				<Image condition="contains all">C:\Windows\SystemApps\Microsoft.Windows.Search_;\SearchApp.exe</Image>
+
+				<!-- Windows: WMI Performance updates-->
+				<Image condition="is">\\?\C:\Windows\system32\wbem\WMIADAP.EXE</Image> 
+
+				<!--Windows: Network file syncing-->
+				<Image condition="is">C:\Windows\system32\mobsync.exe</Image> 
+
+				<!-- Windows: Temp files by DrvInst.exe-->
+				<TargetFilename condition="begin with">C:\Windows\system32\DriverStore\Temp\</TargetFilename> 
+
+				<!-- Windows: Created in wbem by WMIADAP.exe-->
+				<TargetFilename condition="begin with">C:\Windows\system32\wbem\Performance\</TargetFilename> 
+
+				<!--Windows:Installer: Ignore MSI installer files caching-->
+				<TargetFilename condition="begin with">C:\Windows\Installer\</TargetFilename> 
+
+				<!-- Windows: Feature updates may contain a large number of .exe and .sys -->
+				<TargetFilename condition="begin with">C:\$WINDOWS.~BT\Sources\</TargetFilename> 
+
+				<!-- Windows: Windows update -->
+				<Image condition="begin with">C:\Windows\winsxs\amd64_microsoft-windows</Image> 
+
+			</FileDelete>
+
+		</RuleGroup>
+
+	</EventFiltering>
+
+</Sysmon>
