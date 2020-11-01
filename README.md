@@ -5,7 +5,12 @@ As stated in the original documentation of Sysmon
 
 Sysmon does not come with a user interface or any remote management capabilities, it needs to be run with configuration file.
 
-Our very first version of this was based on the work of SwiftOnSecurity, please see References.
+This file is meant to be a template with reasonable defaults. We hope that it serves the purpose as a starting point for a configuration that meets your organisational requirements. 
+
+## Customise
+
+
+
 
 ## Use
 Please run all commands with local administrator rights. Make sure to have Sysmon installed. 
@@ -63,6 +68,9 @@ SysmonDrv stopped.
 SysmonDrv removed.
 Removing service files.
 ```
+
+## Support
+Please contact our [support team](mailto:help@threatint.com) for questions, comments, etc.
 
 ## References
 - [Sysmon download](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
