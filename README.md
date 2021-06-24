@@ -78,12 +78,11 @@ Removing service files.
 Please contact our [support team](mailto:help@threatint.com) for questions, comments, etc.
 
 ## References
-- [Sysmon download](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
-- [Sysmon documentation](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
+- [Sysmon documentation and download](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
 - [SwiftOnSecurity/sysmon-config](https://github.com/SwiftOnSecurity/sysmon-config)
 
 ##
-Copyright (c) 2020 [THREATINT (CYRRUS) LTD](https://www.threatint.com)
+(C) Copyright 2021 [THREATINT (CYRRUS) LTD](https://threatint.eu)
 
 ## License
 Release under the MIT License. (see LICENSE)
