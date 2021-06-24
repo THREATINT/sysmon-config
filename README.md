@@ -82,7 +82,7 @@ Please contact our [support team](mailto:help@threatint.com) for questions, comm
 - [SwiftOnSecurity/sysmon-config](https://github.com/SwiftOnSecurity/sysmon-config)
 
 ##
-(C) Copyright 2021 [THREATINT (CYRRUS) LTD](https://threatint.eu)
+Copyright (C) 2021 [THREATINT (CYRRUS) LTD](https://threatint.eu)
 
 ## License
 Release under the MIT License. (see LICENSE)
