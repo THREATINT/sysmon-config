@@ -18,7 +18,7 @@ Please DO NOT USE THIS TEMPLATE without propper customisation! This template con
 
 Please also check the latest documentation from Microsoft for additional parameters and/or options. 
 
-## Use
+## Running
 Please run all commands with local administrator rights.
 
 ### Install
