@@ -1,5 +1,6 @@
 # sysmon-config
 
+## Introduction 
 This is a template for the configuration of Microsoft (Sysinternals) Sysmon.
 
 As stated in the original documentation of Sysmon
@@ -22,67 +23,75 @@ Please run all commands with local administrator rights.
 
 ### Install
 ```
-Sysmon64.exe -accepteula -i config.xml
+Sysmon.exe -accepteula -i config.xml
 ```
 
 ```
-System Monitor v12.01 - System activity monitor
-Copyright (C) 2014-2020 Mark Russinovich and Thomas Garnier
+System Monitor v14.13 - System activity monitor
+By Mark Russinovich and Thomas Garnier
+Copyright (C) 2014-2022 Microsoft Corporation
+Using libxml2. libxml2 is Copyright (C) 1998-2012 Daniel Veillard. All Rights Reserved.
 Sysinternals - www.sysinternals.com
 
-Loading configuration file with schema version 4.40
+Loading configuration file with schema version 4.82
+Sysmon schema version: 4.83
 Configuration file validated.
-Sysmon64 installed.
+Sysmon installed.
 SysmonDrv installed.
 Starting SysmonDrv.
 SysmonDrv started.
-Starting Sysmon64..
-Sysmon64 started.
+Starting Sysmon..
+Sysmon started.
 ```
 
 ### Update
 ```
-Sysmon64.exe -c config.xml
+Sysmon.exe -c config.xml
 ```
 
 ```
-System Monitor v12.01 - System activity monitor
-Copyright (C) 2014-2020 Mark Russinovich and Thomas Garnier
+System Monitor v14.13 - System activity monitor
+By Mark Russinovich and Thomas Garnier
+Copyright (C) 2014-2022 Microsoft Corporation
+Using libxml2. libxml2 is Copyright (C) 1998-2012 Daniel Veillard. All Rights Reserved.
 Sysinternals - www.sysinternals.com
 
-Loading configuration file with schema version 4.40
+Loading configuration file with schema version 4.82
+Sysmon schema version: 4.83
 Configuration file validated.
 Configuration updated.
 ```
 
 ### Uninstall
 ```
-Sysmon64.exe -u
+Sysmon.exe -u
 ```
 
 ```
-System Monitor v12.01 - System activity monitor
-Copyright (C) 2014-2020 Mark Russinovich and Thomas Garnier
+System Monitor v14.13 - System activity monitor
+By Mark Russinovich and Thomas Garnier
+Copyright (C) 2014-2022 Microsoft Corporation
+Using libxml2. libxml2 is Copyright (C) 1998-2012 Daniel Veillard. All Rights Reserved.
 Sysinternals - www.sysinternals.com
 
-Stopping Sysmon64.
-Sysmon64 stopped.
-Sysmon64 removed.
+Stopping Sysmon.
+Sysmon stopped.
+Sysmon removed.
 Stopping SysmonDrv.
 SysmonDrv stopped.
 SysmonDrv removed.
 Removing service files.
 ```
 
-## Support
-Please contact our [support team](mailto:help@threatint.com) for questions, comments, etc.
-
 ## References
 - [Sysmon documentation and download](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
-- [SwiftOnSecurity/sysmon-config](https://github.com/SwiftOnSecurity/sysmon-config)
 
-##
-Copyright (C) 2021 [THREATINT (CYRRUS) LTD](https://threatint.eu)
+## Feedback
+We would love to hear from you! Please contact us at [help@threatint.com](mailto:help@threatint.com) for feedback and general requests.
+
+Kindly raise an issue in Github if you find a problem in the code.
+
+[Subscribe to our mailing list](https://newsletter.threatint.com/subscription?f=NiRp2763y19cplj796wGLZKeWSkrkkO8stBCsNbHL668BFHW478DRGNlNBXJZtV3rzH1DzWbtP8jGAJ4WDHmRPkw) to learn more about our work.
 
 ## License
 Release under the MIT License. (see LICENSE)
