@@ -1,5 +1,9 @@
 # sysmon-config
 
+# EOL
+This respository is EOL (End-of-Life), we are no longer maintaining it. Most of our customers have implemented EDR (Endpoint Detection and Response), which has made the use of sysmon largely redundant.
+Kindly send a message to [feedback@threatint.com](mailto:feedback@threatint.com), we are happy to reinstate this repository and work on it again if it is of any use (again).
+
 ## Introduction 
 This is a template for the configuration of Microsoft (Sysinternals) Sysmon.
 
@@ -90,8 +94,6 @@ Removing service files.
 We would love to hear from you! Please contact us at [help@threatint.com](mailto:help@threatint.com) for feedback and general requests.
 
 Kindly raise an issue in Github if you find a problem in the code.
-
-[Subscribe to our mailing list](https://newsletter.threatint.com/subscription?f=NiRp2763y19cplj796wGLZKeWSkrkkO8stBCsNbHL668BFHW478DRGNlNBXJZtV3rzH1DzWbtP8jGAJ4WDHmRPkw) to learn more about our work.
 
 ## License
 Release under the MIT License. (see LICENSE)
