@@ -18,12 +18,12 @@ This project is meant to be a template with reasonable defaults. We hope that it
 Aside from having the binary of Sysmon available on the local machine, you also need local administrator rights to run, (un-)install, or (re-)configure Sysmon.
 
 ## Customise
-Please DO NOT USE THIS TEMPLATE without propper customisation! This template contains a lot of comments and is designed to be self-explanatory to assist in the process, but you need to make adjustments! If you run e.g. additional Endpoint Protection or Log-/SIEM-Agents on your machine, make sure to exclude them in the configuration - they will otherwise fill up your Event logs with useless or redundant information.
+Please DO NOT USE THIS TEMPLATE without proper customisation! This template contains a lot of comments and is designed to be self-explanatory to assist in the process, but you need to make adjustments! If you run e.g. additional Endpoint Protection or Log-/SIEM-Agents on your machine, make sure to exclude them in the configuration - they will otherwise fill up your Event logs with useless or redundant information.
 
 Please also check the latest documentation from Microsoft for additional parameters and/or options. 
 
 ## Running
-Please run all commands with local administrator rights.
+Please run all commands with local admin rights. 
 
 ### Install
 ```
@@ -92,7 +92,6 @@ Removing service files.
 
 ## Feedback
 We would love to hear from you! Please contact us at [help@threatint.com](mailto:help@threatint.com) for feedback and general requests.
-
 Kindly raise an issue in Github if you find a problem in the code.
 
 ## License
